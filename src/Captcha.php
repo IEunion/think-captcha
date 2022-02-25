@@ -167,7 +167,7 @@ class Captcha
      * @param bool        $api
      * @return Response
      */
-    public function create(string $config = null, bool $api = false): Response
+    public function create(string $config = null, bool $api = false)
     {
         $this->configure($config);
 
@@ -178,7 +178,7 @@ class Captcha
         // 图片高(px)
         $this->imageH || $this->imageH = $this->fontSize * 2.5;
         // 建立一幅 $this->imageW x $this->imageH 的图像
-        $this->im = imagecreate((int) $this->imageW, (int) $this->imageH);
+        $this->im = imagecreate($this->imageW, $this->imageH);
         // 设置背景
         imagecolorallocate($this->im, $this->bg[0], $this->bg[1], $this->bg[2]);
 
@@ -232,6 +232,14 @@ class Captcha
         imagepng($this->im);
         $content = ob_get_clean();
         imagedestroy($this->im);
+
+        // api调用
+        if ($api) {
+            return [
+                'code' => implode('', $text),
+                'img' => 'data:image/png;base64,' . chunk_split(base64_encode($content))
+            ];
+        }
 
         return response($content, 200, ['Content-Length' => strlen($content)])->contentType('image/png');
     }
