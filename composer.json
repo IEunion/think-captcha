@@ -1,10 +1,10 @@
 {
-    "name": "topthink/think-captcha",
+    "name": "ieunion/think-captcha",
     "description": "captcha package for thinkphp",
     "authors": [
         {
-            "name": "yunwuxin",
-            "email": "448901948@qq.com"
+            "name": "ieunion",
+            "email": "info@ieunion.app"
         }
     ],
     "license": "Apache-2.0",
